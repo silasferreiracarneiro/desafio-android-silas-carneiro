@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/characterListFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/detailCharacterFragment"
@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_detail_character" >
         <action
             android:id="@+id/action_detailCharacterFragment_to_hqValueFragment"
-            app:destination="@id/hqValueFragment" />
+            app:destination="@id/hqValueFragment"
+            app:popUpTo="@id/detailCharacterFragment" />
     </fragment>
 
     <fragment
@@ -28,6 +29,20 @@
         tools:layout="@layout/fragment_character_list" >
         <action
             android:id="@+id/action_characterListFragment_to_detailCharacterFragment"
-            app:destination="@id/detailCharacterFragment" />
+            app:destination="@id/detailCharacterFragment"
+            app:popUpTo="@id/characterListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="br.com.silas.desafio_android_silas_carneiro.ui.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_characterListFragment"
+            app:destination="@id/characterListFragment"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
