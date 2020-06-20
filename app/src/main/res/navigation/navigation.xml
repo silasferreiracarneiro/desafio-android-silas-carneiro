@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/characterListFragment">
+
+    <fragment
+        android:id="@+id/detailCharacterFragment"
+        android:name="br.com.silas.desafio_android_silas_carneiro.ui.detailCharacter.DetailCharacterFragment"
+        android:label="fragment_detail_character"
+        tools:layout="@layout/fragment_detail_character" >
+        <action
+            android:id="@+id/action_detailCharacterFragment_to_hqValueFragment"
+            app:destination="@id/hqValueFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/hqValueFragment"
+        android:name="br.com.silas.desafio_android_silas_carneiro.ui.hqValue.HqValueFragment"
+        android:label="fragment_hq_value"
+        tools:layout="@layout/fragment_hq_value" />
+
+    <fragment
+        android:id="@+id/characterListFragment"
+        android:name="br.com.silas.desafio_android_silas_carneiro.ui.characterList.CharacterListFragment"
+        android:label="fragment_character_list"
+        tools:layout="@layout/fragment_character_list" >
+        <action
+            android:id="@+id/action_characterListFragment_to_detailCharacterFragment"
+            app:destination="@id/detailCharacterFragment" />
+    </fragment>
+</navigation>
