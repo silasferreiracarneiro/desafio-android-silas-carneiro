@@ -36,7 +36,7 @@ class CharacterListFragment : BaseFragment() {
         })
     }
 
-    private fun sucessCallApi(result: CharacterPerson?) {
+    private fun sucessCallApi(result: ArrayList<CharacterPerson>?) {
 
     }
 

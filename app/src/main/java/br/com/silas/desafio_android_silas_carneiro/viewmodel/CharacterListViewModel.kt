@@ -31,14 +31,14 @@ class CharacterListViewModel(private val usecase: CharacterListUseCase = provide
         }
     }
 
-    private fun afterCall(result: ResultApi<DataResponse<CharacterPerson>>) {
+    private fun afterCall(result: ResultApi<DataResponse<ArrayList<CharacterPerson>>>) {
         when (result.isSucess()) {
             true -> formatResultCallApi(result.value)
             false -> state.postValue(CharacterListState.ErrorCallApi(result.error?.message))
         }
     }
 
-    private fun formatResultCallApi(result: DataResponse<CharacterPerson>?) {
+    private fun formatResultCallApi(result: DataResponse<ArrayList<CharacterPerson>>?) {
         when (result?.statusCode) {
             STATUS_CODE_DUZENTOS -> state.postValue(CharacterListState.SucessCallApi(result.data?.result))
             else -> state.postValue(CharacterListState.ErrorCallApi(result?.status))
