@@ -21,4 +21,12 @@ abstract class BaseFragment : Fragment() {
     fun dismissDialog() {
         dialog.dismiss()
     }
+
+    fun showDialogError() {
+
+    }
+
+    fun hideDialogError() {
+
+    }
 }
