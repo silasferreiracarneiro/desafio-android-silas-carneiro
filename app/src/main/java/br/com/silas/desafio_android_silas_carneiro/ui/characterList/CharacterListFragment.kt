@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.silas.desafio_android_silas_carneiro.R
+import br.com.silas.desafio_android_silas_carneiro.adapter.CharacterListAdapter
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
 import br.com.silas.desafio_android_silas_carneiro.ui.base.BaseFragment
 import br.com.silas.desafio_android_silas_carneiro.viewmodel.CharacterListViewModel
@@ -16,15 +19,22 @@ class CharacterListFragment : BaseFragment() {
 
     private lateinit var viewmodel: CharacterListViewModel
 
+    private lateinit var recycler: RecyclerView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_character_list, container, false)
 
+        bindProperties(view)
         bindViewModel()
         addObservable()
         getListCharacter()
 
         return view
+    }
+
+    private fun bindProperties(view: View) {
+        this.recycler = view.findViewById(R.id.recycler_heros)
     }
 
     private fun addObservable() {
@@ -37,7 +47,9 @@ class CharacterListFragment : BaseFragment() {
     }
 
     private fun sucessCallApi(result: ArrayList<CharacterPerson>?) {
-
+        result?.let {
+            configureAdapter(it)
+        }
     }
 
     private fun errorCallApi(message: String?) {
@@ -50,5 +62,13 @@ class CharacterListFragment : BaseFragment() {
 
     private fun getListCharacter() {
         viewmodel.getListCharacter()
+    }
+
+    private fun configureAdapter(it: ArrayList<CharacterPerson>) {
+        recycler.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(activity)
+        recycler.isNestedScrollingEnabled = false
+        recycler.adapter = CharacterListAdapter(it)
+        ((recycler.adapter as CharacterListAdapter).notifyDataSetChanged())
     }
 }
