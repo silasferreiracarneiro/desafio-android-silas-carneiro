@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import br.com.silas.desafio_android_silas_carneiro.R
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
@@ -19,6 +20,7 @@ class DetailCharacterFragment : Fragment() {
     private lateinit var logo: ImageView
     private lateinit var title: TextView
     private lateinit var description: TextView
+    private lateinit var btnHq: LinearLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +30,7 @@ class DetailCharacterFragment : Fragment() {
 
         bindProperties(view)
         setValueProperties()
+        setEvent()
 
         return view
     }
@@ -36,8 +39,14 @@ class DetailCharacterFragment : Fragment() {
         logo = view.findViewById(R.id.img_logo)
         title = view.findViewById(R.id.txt_title)
         description = view.findViewById(R.id.txt_description)
+        btnHq = view.findViewById(R.id.btn_hq)
     }
 
+    private fun setEvent() {
+        btnHq.setOnClickListener {
+
+        }
+    }
 
     private fun setValueProperties() {
         val hero = arguments?.getSerializable(HERO) as CharacterPerson
