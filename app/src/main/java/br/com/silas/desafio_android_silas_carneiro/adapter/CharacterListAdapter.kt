@@ -10,9 +10,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.silas.desafio_android_silas_carneiro.R
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
+import br.com.silas.desafio_android_silas_carneiro.ui.characterList.CharacterSelect
 import com.bumptech.glide.Glide
 
-class CharacterListAdapter (var heros: ArrayList<CharacterPerson>): RecyclerView.Adapter<CharacterListAdapter.CharacterListHolder>() {
+class CharacterListAdapter (var heros: ArrayList<CharacterPerson>, val listener: CharacterSelect):
+    RecyclerView.Adapter<CharacterListAdapter.CharacterListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_list_heros, parent, false)
@@ -28,6 +30,7 @@ class CharacterListAdapter (var heros: ArrayList<CharacterPerson>): RecyclerView
             val item = heros[position]
             holder.title.text = item.name
             loadPhoto(item.thumbnail.path, item.thumbnail.extension, holder)
+            holder.photo.setOnClickListener { listener.itemClicked(item) }
         }
     }
 

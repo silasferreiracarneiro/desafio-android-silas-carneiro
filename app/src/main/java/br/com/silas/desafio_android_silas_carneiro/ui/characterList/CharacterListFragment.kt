@@ -4,18 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.silas.desafio_android_silas_carneiro.R
 import br.com.silas.desafio_android_silas_carneiro.adapter.CharacterListAdapter
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
 import br.com.silas.desafio_android_silas_carneiro.ui.base.BaseFragment
+import br.com.silas.desafio_android_silas_carneiro.utils.Contants.HERO
 import br.com.silas.desafio_android_silas_carneiro.viewmodel.CharacterListViewModel
 import br.com.silas.desafio_android_silas_carneiro.viewmodel.states.characterList.CharacterListState
 
-class CharacterListFragment : BaseFragment() {
+class CharacterListFragment : BaseFragment(), CharacterSelect {
+
+    //TODO: Adicionar
+    //https://github.com/yarolegovich/DiscreteScrollView
+    //https://github.com/skydoves/transformationlayout
 
     private lateinit var viewmodel: CharacterListViewModel
 
@@ -68,7 +75,16 @@ class CharacterListFragment : BaseFragment() {
         recycler.setHasFixedSize(true)
         recycler.layoutManager = LinearLayoutManager(activity)
         recycler.isNestedScrollingEnabled = false
-        recycler.adapter = CharacterListAdapter(it)
+        recycler.adapter = CharacterListAdapter(it, this)
         ((recycler.adapter as CharacterListAdapter).notifyDataSetChanged())
     }
+
+    override fun itemClicked(hero: CharacterPerson) {
+        val bundle = bundleOf(Pair(HERO, hero))
+        view?.findNavController()?.navigate(R.id.action_characterListFragment_to_detailCharacterFragment, bundle)
+    }
+}
+
+interface CharacterSelect {
+    fun itemClicked(hero: CharacterPerson)
 }

@@ -1,6 +1,7 @@
 package br.com.silas.desafio_android_silas_carneiro.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 class CharacterPerson (
     @SerializedName("id") val id : Int,
@@ -14,4 +15,4 @@ class CharacterPerson (
     @SerializedName("stories") val stories : Stories,
     @SerializedName("events") val events : Events,
     @SerializedName("urls") val urls : List<Urls>
-)
+) : Serializable

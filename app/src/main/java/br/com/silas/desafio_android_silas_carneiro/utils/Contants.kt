@@ -9,4 +9,6 @@ object Contants {
     const val KEY_PRIVATE = "fd8829ff6af92558b966da9de7e973f34a0ae7ce"
 
     const val SPLASH_TIME_OUT:Long = 3000
+
+    const val HERO = "hero"
 }
