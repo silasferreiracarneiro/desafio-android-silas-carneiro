@@ -11,4 +11,5 @@ object Contants {
     const val SPLASH_TIME_OUT:Long = 3000
 
     const val HERO = "hero"
+    const val ID_HERO = "idHero"
 }

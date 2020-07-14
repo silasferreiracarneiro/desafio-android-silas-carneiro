@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import br.com.silas.desafio_android_silas_carneiro.R
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
+import br.com.silas.desafio_android_silas_carneiro.ui.hqValue.HqValueFragment
 import br.com.silas.desafio_android_silas_carneiro.utils.Contants.HERO
 import com.bumptech.glide.Glide
 
@@ -21,6 +22,8 @@ class DetailCharacterFragment : Fragment() {
     private lateinit var title: TextView
     private lateinit var description: TextView
     private lateinit var btnHq: LinearLayout
+
+    private lateinit var hero: CharacterPerson
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,12 +47,14 @@ class DetailCharacterFragment : Fragment() {
 
     private fun setEvent() {
         btnHq.setOnClickListener {
-
+            activity?.let {
+                HqValueFragment.newInstance(hero.id).show(it.supportFragmentManager, this.tag)
+            }
         }
     }
 
     private fun setValueProperties() {
-        val hero = arguments?.getSerializable(HERO) as CharacterPerson
+        hero = arguments?.getSerializable(HERO) as CharacterPerson
         title.text = hero.name
         description.text = hero.description
         loadPhoto(hero)
