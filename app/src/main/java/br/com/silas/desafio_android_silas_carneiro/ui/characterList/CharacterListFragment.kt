@@ -21,10 +21,6 @@ import br.com.silas.desafio_android_silas_carneiro.viewmodel.states.characterLis
 
 class CharacterListFragment : BaseFragment(), CharacterSelect {
 
-    //TODO: Adicionar
-    //https://github.com/yarolegovich/DiscreteScrollView
-    //https://github.com/skydoves/transformationlayout
-
     private lateinit var viewmodel: CharacterListViewModel
 
     private lateinit var recycler: RecyclerView
@@ -78,7 +74,7 @@ class CharacterListFragment : BaseFragment(), CharacterSelect {
 
     private fun configureAdapter(it: ArrayList<CharacterPerson>) {
         recycler.setHasFixedSize(true)
-        recycler.layoutManager = LinearLayoutManager(activity)
+        recycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         recycler.isNestedScrollingEnabled = false
         recycler.adapter = CharacterListAdapter(it, this)
         ((recycler.adapter as CharacterListAdapter).notifyDataSetChanged())

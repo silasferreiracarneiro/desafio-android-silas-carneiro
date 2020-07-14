@@ -28,7 +28,6 @@ class CharacterListAdapter (var heros: ArrayList<CharacterPerson>, val listener:
     override fun onBindViewHolder(holder: CharacterListHolder, position: Int) {
         if(itemCount > 0) {
             val item = heros[position]
-            holder.title.text = item.name
             loadPhoto(item.thumbnail.path, item.thumbnail.extension, holder)
             holder.photo.setOnClickListener { listener.itemClicked(item) }
         }
@@ -49,6 +48,5 @@ class CharacterListAdapter (var heros: ArrayList<CharacterPerson>, val listener:
 
     class CharacterListHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val photo: ImageView = itemView.findViewById(R.id.img_hero)
-        val title: TextView = itemView.findViewById(R.id.txt_title)
     }
 }
