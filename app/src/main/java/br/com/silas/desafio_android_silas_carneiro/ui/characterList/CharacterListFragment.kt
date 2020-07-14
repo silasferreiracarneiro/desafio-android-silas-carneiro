@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -27,6 +28,7 @@ class CharacterListFragment : BaseFragment(), CharacterSelect {
     private lateinit var viewmodel: CharacterListViewModel
 
     private lateinit var recycler: RecyclerView
+    private lateinit var progress: ProgressBar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -42,6 +44,7 @@ class CharacterListFragment : BaseFragment(), CharacterSelect {
 
     private fun bindProperties(view: View) {
         this.recycler = view.findViewById(R.id.recycler_heros)
+        this.progress = view.findViewById(R.id.load_heros)
     }
 
     private fun addObservable() {
@@ -56,11 +59,13 @@ class CharacterListFragment : BaseFragment(), CharacterSelect {
     private fun sucessCallApi(result: ArrayList<CharacterPerson>?) {
         result?.let {
             configureAdapter(it)
+            progress.visibility = View.GONE
+            recycler.visibility = View.VISIBLE
         }
     }
 
     private fun errorCallApi(message: String?) {
-
+        progress.visibility = View.GONE
     }
 
     private fun bindViewModel() {
