@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.silas.desafio_android_silas_carneiro.R
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
@@ -17,7 +16,7 @@ class CharacterListAdapter (var heros: ArrayList<CharacterPerson>, val listener:
     RecyclerView.Adapter<CharacterListAdapter.CharacterListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_list_heros, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.character_item, parent, false)
         return CharacterListHolder(view)
     }
 
@@ -29,6 +28,7 @@ class CharacterListAdapter (var heros: ArrayList<CharacterPerson>, val listener:
         if(itemCount > 0) {
             val item = heros[position]
             loadPhoto(item.thumbnail.path, item.thumbnail.extension, holder)
+            holder.characterListHolder = item
             holder.photo.setOnClickListener { listener.itemClicked(item) }
         }
     }
@@ -48,5 +48,6 @@ class CharacterListAdapter (var heros: ArrayList<CharacterPerson>, val listener:
 
     class CharacterListHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val photo: ImageView = itemView.findViewById(R.id.img_hero)
+        var characterListHolder: CharacterPerson? = null
     }
 }

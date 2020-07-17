@@ -5,8 +5,10 @@ import br.com.silas.desafio_android_silas_carneiro.api.config.DataResponse
 import br.com.silas.desafio_android_silas_carneiro.api.config.ResultApi
 import br.com.silas.desafio_android_silas_carneiro.api.config.doResquest
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
+import br.com.silas.desafio_android_silas_carneiro.model.HeroSeries
 import br.com.silas.desafio_android_silas_carneiro.utils.Contants
 import br.com.silas.desafio_android_silas_carneiro.utils.md5
+import kotlinx.coroutines.Deferred
 
 class CharacterListRepository(private val api: Api) {
 
@@ -14,6 +16,17 @@ class CharacterListRepository(private val api: Api) {
         val ts = (System.currentTimeMillis() / 1000).toString()
         return doResquest {
             api.getListCharacter(
+                ts = (System.currentTimeMillis() / 1000).toString(),
+                hash = md5(ts + Contants.KEY_PRIVATE + Contants.KEY_PUBLIC)
+            ).await()
+        }
+    }
+
+    suspend fun getSeries(id: Int): ResultApi<DataResponse<ArrayList<HeroSeries>>> {
+        val ts = (System.currentTimeMillis() / 1000).toString()
+        return doResquest {
+            api.getSeries(
+                id = id,
                 ts = (System.currentTimeMillis() / 1000).toString(),
                 hash = md5(ts + Contants.KEY_PRIVATE + Contants.KEY_PUBLIC)
             ).await()
