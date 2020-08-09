@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import br.com.silas.desafio_android_silas_carneiro.R
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
 import br.com.silas.desafio_android_silas_carneiro.ui.hqValue.HqValueFragment
 import br.com.silas.desafio_android_silas_carneiro.utils.Contants.HERO
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.toolbar.*
 
 class DetailCharacterFragment : Fragment() {
 
@@ -33,9 +35,18 @@ class DetailCharacterFragment : Fragment() {
 
         bindProperties(view)
         setValueProperties()
+        configureToolbar(view)
         setEvent()
 
         return view
+    }
+
+    private fun configureToolbar(view: View) {
+        val act = (activity as AppCompatActivity)
+        act.setSupportActionBar(toolbar)
+        act.actionBar?.setDisplayHomeAsUpEnabled(true)
+        act.actionBar?.setDisplayShowHomeEnabled(true)
+        act.actionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun bindProperties(view: View) {

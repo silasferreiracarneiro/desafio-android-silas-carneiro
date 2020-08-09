@@ -12,4 +12,5 @@ object Contants {
 
     const val HERO = "hero"
     const val ID_HERO = "idHero"
+    const val SERIE_HQ = "serieHq"
 }

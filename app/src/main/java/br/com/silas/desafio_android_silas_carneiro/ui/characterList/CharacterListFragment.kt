@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
@@ -16,9 +17,10 @@ import br.com.silas.desafio_android_silas_carneiro.adapter.CharacterListAdapter
 import br.com.silas.desafio_android_silas_carneiro.adapter.SeriesAdapter
 import br.com.silas.desafio_android_silas_carneiro.model.CharacterPerson
 import br.com.silas.desafio_android_silas_carneiro.model.HeroSeries
-import br.com.silas.desafio_android_silas_carneiro.ui.base.BaseFragment
+import br.com.silas.desafio_android_silas_carneiro.ui.detailSerie.DetailSerieFragment
 import br.com.silas.desafio_android_silas_carneiro.utils.Contants.HERO
 import br.com.silas.desafio_android_silas_carneiro.viewmodel.CharacterListViewModel
+import br.com.silas.desafio_android_silas_carneiro.viewmodel.states.characterList.CharacterListEvent
 import br.com.silas.desafio_android_silas_carneiro.viewmodel.states.characterList.CharacterListState
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.DiscreteScrollView.ScrollListener
@@ -26,12 +28,13 @@ import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 
-class CharacterListFragment : BaseFragment(), ScrollListener<CharacterListAdapter.CharacterListHolder> {
+class CharacterListFragment : Fragment(), ScrollListener<CharacterListAdapter.CharacterListHolder> {
 
     private lateinit var viewmodel: CharacterListViewModel
 
     private lateinit var recycler: RecyclerView
     private lateinit var progress: ProgressBar
+    private lateinit var progressSeries: ProgressBar
     private lateinit var caroussel: DiscreteScrollView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -49,10 +52,17 @@ class CharacterListFragment : BaseFragment(), ScrollListener<CharacterListAdapte
     private fun bindProperties(view: View) {
         this.recycler = view.findViewById(R.id.recycler_heros)
         this.progress = view.findViewById(R.id.load_heros)
+        this.progressSeries = view.findViewById(R.id.progress_series)
         this.caroussel = view.findViewById(R.id.heroi_caroussel)
     }
 
     private fun addObservable() {
+        viewmodel.viewEvent.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is CharacterListEvent.ShowDialogSeries -> showOrHideProgressBarSeries(true)
+            }
+        })
+
         viewmodel.viewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is CharacterListState.SucessCallApi -> sucessCallApi(it.result)
@@ -122,11 +132,14 @@ class CharacterListFragment : BaseFragment(), ScrollListener<CharacterListAdapte
 
         recycler.adapter = SeriesAdapter(it, object : SerieSelect {
             override fun itemSelect(serie: HeroSeries) {
-
+                activity?.let {
+                    DetailSerieFragment.newInstance(serie).show(it.supportFragmentManager, CharacterListFragment::class.java.name)
+                }
             }
         })
 
         ((recycler.adapter as SeriesAdapter).notifyDataSetChanged())
+        showOrHideProgressBarSeries(false)
     }
 
     override fun onScroll(
@@ -138,6 +151,19 @@ class CharacterListFragment : BaseFragment(), ScrollListener<CharacterListAdapte
     ) {
         p4?.characterListHolder?.let {
             viewmodel.getSeries(it.id)
+        }
+    }
+
+    private fun showOrHideProgressBarSeries(hideOrShow: Boolean) {
+        when (hideOrShow) {
+            true -> {
+                recycler.visibility = View.INVISIBLE
+                progressSeries.visibility = View.VISIBLE
+            }
+            false -> {
+                recycler.visibility = View.VISIBLE
+                progressSeries.visibility = View.INVISIBLE
+            }
         }
     }
 }

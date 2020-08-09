@@ -22,12 +22,14 @@
 
     <TextView
         android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:gravity="center"
+        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="@+id/img_hero"
         app:layout_constraintStart_toStartOf="@+id/img_hero"
         app:layout_constraintTop_toBottomOf="@+id/img_hero"
@@ -35,13 +37,14 @@
 
     <TextView
         android:id="@+id/txt_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/txt_title"
         app:layout_constraintStart_toStartOf="@+id/txt_title"

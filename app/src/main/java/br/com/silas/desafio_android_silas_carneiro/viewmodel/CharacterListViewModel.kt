@@ -47,6 +47,7 @@ class CharacterListViewModel(private val usecase: CharacterListUseCase = provide
     }
 
     fun getSeries(id: Int) {
+        event.postValue(CharacterListEvent.ShowDialogSeries)
         GlobalScope.launch {
             val result = usecase.getSeries(id)
             afterCallSeries(
